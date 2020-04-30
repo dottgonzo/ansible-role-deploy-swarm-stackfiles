@@ -5,7 +5,7 @@
 
 - name: Deploy stack from a compose file
   docker_stack:
-    state: present
+    state: "{{ 'absent' if docker_stack_remove is defined else 'present' }}"
     resolve_image: 'always'
     name: "{{ docker_stack_name }}"
     compose:
