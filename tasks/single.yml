@@ -1,8 +1,15 @@
 ---
 - name: "pull images for {{ docker_stack_name }}"
   docker_compose:
-    project_src: "{{ docker_compose_file | dirname }}"
-    files: 
-      - "{{ docker_compose_file | basename }}"
+    src: "{{ docker_compose_file }}"
     pull: "yes"
+
+- name: Deploy stack from a compose file
+  docker_stack:
     state: present
+    name: "{{ docker_stack_name }}"
+    compose:
+      - "{{ docker_compose_file }}"
+    with_registry_auth: "{{ docker_stack_auth if docker_stack_auth is defined else 'no' }}"
+  when:
+    - primarymanager is defined
