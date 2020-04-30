@@ -3,7 +3,20 @@
   command: "docker-compose -f {{ docker_compose_file }} pull"
   changed_when: False
 
-- name: Deploy stack from a compose file
+- name: "Reinstance stack {{ docker_stack_name }}"
+  docker_stack:
+    state: 'absent'
+    resolve_image: 'always'
+    name: "{{ docker_stack_name }}"
+    compose:
+      - "{{ docker_compose_file }}"
+    with_registry_auth: "{{ docker_stack_auth if docker_stack_auth is defined else 'no' }}"
+  when:
+    - primarymanager is defined
+    - docker_stack_reinstance is defined
+    - docker_stack_remove is undefined
+
+- name: "Deploy Docker stack {{ docker_stack_name }} on Swarm"
   docker_stack:
     state: "{{ 'absent' if docker_stack_remove is defined else 'present' }}"
     resolve_image: 'always'
