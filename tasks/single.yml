@@ -1,0 +1,8 @@
+---
+- name: "pull images for {{ docker_stack_name }}"
+  docker_compose:
+    project_src: "{{ docker_compose_file | dirname }}"
+    files: 
+      - "{{ docker_compose_file | basename }}"
+    pull: "yes"
+    state: present

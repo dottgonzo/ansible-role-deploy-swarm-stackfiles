@@ -1,0 +1,18 @@
+---
+- name: Deploy Stack 
+  include_tasks: single.yml
+  when: 
+    - docker_stack_name is defined
+    - docker_stacks is undefined
+
+- name: Deploy Multiple stacks
+  include_tasks: single.yml
+  loop: "{{ docker_stacks if docker_stacks is defined else [] }}"
+  loop_control:
+    loop_var: stack_file_item
+  vars:
+    docker_stack_name: "{{ stack_file_item.docker_stack_name }}"
+    docker_compose_file: "{{ stack_file_item.docker_compose_file }}"
+    docker_stack_auth: "{{ stack_file_item.docker_stack_auth }}"
+  when: 
+    - docker_stacks is defined
