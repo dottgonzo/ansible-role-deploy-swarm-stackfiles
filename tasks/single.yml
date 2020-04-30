@@ -1,6 +1,6 @@
 ---
 - name: "pull images for {{ docker_stack_name }}"
-  command: "docker pull -f {{ docker_compose_file }} pull"
+  command: "docker -f {{ docker_compose_file }} pull"
   changed_when: False
 
 - name: Deploy stack from a compose file
