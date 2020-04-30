@@ -6,6 +6,7 @@
 - name: Deploy stack from a compose file
   docker_stack:
     state: present
+    resolve_image: 'always'
     name: "{{ docker_stack_name }}"
     compose:
       - "{{ docker_compose_file }}"
