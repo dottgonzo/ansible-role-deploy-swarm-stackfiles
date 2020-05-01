@@ -16,6 +16,6 @@
     docker_stack_auth: "{{ stack_file_item.docker_stack_auth if stack_file_item.docker_stack_auth is defined else omit }}"
     docker_stack_environment: "{{ stack_file_item.docker_stack_environment if stack_file_item.docker_stack_environment is defined else omit }}"
     docker_stack_remove: "{{ stack_file_item.docker_stack_remove if stack_file_item.docker_stack_remove == 'yes' is defined else 'no' }}"
-    docker_stack_reinstance: "{{ stack_file_item.docker_stack_reinstance if stack_file_item.docker_stack_reinstance is defined }}"
+    docker_stack_reinstance: "{{ stack_file_item.docker_stack_reinstance if stack_file_item.docker_stack_reinstance is defined else 'yes' }}"
   when: 
     - docker_stacks is defined

@@ -13,7 +13,7 @@
     with_registry_auth: "{{ docker_stack_auth if docker_stack_auth is defined else 'no' }}"
   when:
     - primarymanager is defined
-    - docker_stack_reinstance is defined 
+    - docker_stack_reinstance is defined and docker_stack_reinstance == 'yes'
     - docker_stack_remove is undefined or docker_stack_remove != 'yes'
 
 - name: "Deploy Docker stack {{ docker_stack_name }} on Swarm"
