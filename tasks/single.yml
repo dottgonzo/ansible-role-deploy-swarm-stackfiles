@@ -12,7 +12,6 @@
       - "{{ docker_compose_file }}"
     with_registry_auth: "{{ docker_stack_auth if docker_stack_auth is defined else 'no' }}"
   when:
-    - primarymanager is defined
     - docker_stack_reinstance is defined and docker_stack_reinstance == 'yes'
     - docker_stack_remove is undefined or docker_stack_remove != 'yes'
 
@@ -24,6 +23,4 @@
     compose:
       - "{{ docker_compose_file }}"
     with_registry_auth: "{{ docker_stack_auth if docker_stack_auth is defined else 'no' }}"
-  when:
-    - primarymanager is defined
   environment: "{{ docker_stack_environment if docker_stack_environment is defined else omit }}"
