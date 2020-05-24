@@ -24,6 +24,6 @@
     compose:
       - "{{ docker_compose_file }}"
     with_registry_auth: "{{ docker_stack_auth if docker_stack_auth is defined else 'no' }}"
-    when:
-      - primarymanager is defined
+  when:
+    - primarymanager is defined
   environment: "{{ docker_stack_environment if docker_stack_environment is defined else omit }}"
