@@ -1,7 +1,6 @@
 ---
 - name: "pull images for {{ docker_stack_name }}"
-  command: "{{ docker_compose_binpath if docker_compose_binpath is defined else 'docker-compose' }} -f {{ docker_compose_file }} pull"
-  changed_when: False
+  include_tasks: pullOne.yml
 
 - name: "Reinstance stack {{ docker_stack_name }}"
   docker_stack:
@@ -15,7 +14,7 @@
     - primarymanager is defined
     - docker_stack_reinstance is defined and docker_stack_reinstance == 'yes'
     - docker_stack_remove is undefined or docker_stack_remove != 'yes'
-
+    - docker_stack_only_pull is undefined or docker_stack_only_pull != 'yes'
 - name: "Deploy Docker stack {{ docker_stack_name }} on Swarm"
   docker_stack:
     state: "{{ 'absent' if docker_stack_remove is defined and docker_stack_remove == 'yes' else 'present' }}"
@@ -27,4 +26,5 @@
   when:
     - primarymanager is defined
     - docker_stack_remove is undefined or docker_stack_remove != 'yes'
+    - docker_stack_only_pull is undefined or docker_stack_only_pull != 'yes'
   environment: "{{ docker_stack_environment if docker_stack_environment is defined else omit }}"

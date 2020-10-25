@@ -1,0 +1,4 @@
+---
+- name: "pull images for {{ docker_stack_name }}"
+  command: "{{ docker_compose_binpath if docker_compose_binpath is defined else 'docker-compose' }} -f {{ docker_compose_file }} pull"
+  changed_when: False
